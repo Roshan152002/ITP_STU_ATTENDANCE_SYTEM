@@ -68,16 +68,15 @@ class Subject(models.Model):
     
 
 class Attendance(models.Model):
-    stutus = [
+    presenty = [
         ('present','present'),
         ('absent','absent'),
     ]
 
-    status = models.CharField(max_length=10,choices=status,default='absent')
     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='student_attendance')
     subject = models.ForeignKey(Subject,on_delete=models.CASCADE,related_name='subject_attendance')
     date = models.DateField(auto_now_add=True)
-    is_present = models.CharField(max_length=10,choices=status,default='absent')
+    is_present = models.CharField(max_length=10,choices=presenty,default='absent')
 
     class Meta:
         ordering = ['-date']
@@ -89,7 +88,7 @@ class Attendance(models.Model):
 class Exam(models.Model):
     title = models.CharField(max_length=255,unique=True)
     subject = models.ForeignKey(Subject,on_delete=models.CASCADE,related_name='subject_exam')
-    teacher = models.Foreignkey(Teacher,on_delete=models.CASCADE,related_name='exam_conducted')
+    teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name='exam_conducted')
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
