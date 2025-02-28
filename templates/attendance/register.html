@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registration</title>
-</head>
-<body>
+  </head>
+  <body>
     <section>
-        <div>
-            <h1>Registration</h1>
-            <form  method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{user_form}}
-                if user_form.user_type == 'student':
-                    {{student_form}}
-                elif user_form.user_type == 'teacher':
-                    {{teacher_form}}
-                elif user_form.user_type == 'admin':
-                    {{admin_form}}
-                else:
-                    {{student_form}}
-                <button type="submit">Register</button>
-            </form>
-        </div>
+      <div>
+        <h1>Registration</h1>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <h2>User Details</h2>
+          {{ user_form.as_p }}
+
+          <div id="student-form" style="display: none;">
+            <h2>Student Details</h2>
+            {{ student_form.as_p }}
+          </div>
+      
+          <div id="teacher-form" style="display: none;">
+            <h2>Teacher Details</h2>
+            {{ teacher_form.as_p }}
+          </div>
+          <button type="submit">Register</button>
+        </form>
+      </div>
     </section>
-</body>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var userTypeField = document.getElementById("id_user_type");
+
+        function toggleForms() {
+            var userType = userTypeField.value;
+            document.getElementById("student-form").style.display = (userType === "student") ? "block" : "none";
+            document.getElementById("teacher-form").style.display = (userType === "teacher") ? "block" : "none";
+        }
+
+        userTypeField.addEventListener("change", toggleForms);
+        toggleForms();  
+    });
+    </script>
+  </body>
 </html>

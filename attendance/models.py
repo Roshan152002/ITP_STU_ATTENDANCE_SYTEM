@@ -30,11 +30,11 @@ class Student(models.Model):
     roll_no = models.CharField(max_length=10,unique=True)
     batch_name = models.CharField(max_length=100,null=False,blank=False)
     phone_no = models.CharField(max_length=10,unique=True,null=True,blank=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     address = models.TextField(null=True,blank=True)
     enrollment_date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    profile_pic = models.ImageField(upload_to='profile_pics/',null=True,blank=True)
+    profile_pic = models.FileField(upload_to='profile_pics/',null=True,blank=True)
 
     class Meta:
         ordering = ['roll_no']
@@ -45,7 +45,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='teacher_model')
     phone_no = models.CharField(max_length=10,unique=True,null=True,blank=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     address = models.TextField(null=True,blank=True)
     joining_date = models.DateField(auto_now_add=True)
     department = models.CharField(max_length=100,null=True,blank=True)
