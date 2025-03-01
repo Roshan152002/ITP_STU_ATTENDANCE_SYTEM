@@ -3,6 +3,7 @@ from .forms import UserRegisterForm, StudentRegisterForm, TeacherRegisterForm
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 
 def register(request):
     user_form = UserRegisterForm()
@@ -30,12 +31,28 @@ def register(request):
                 teachers.save()
 
             login(request, user)
-            return redirect('dashboard')
+            return redirect('login')
     return render(request, 'attendance/register.html', {
         'user_form': user_form,
         'student_form': student_form,
         'teacher_form': teacher_form
     })
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'attendance/login.html', {'form': form})
+
 
 
 
