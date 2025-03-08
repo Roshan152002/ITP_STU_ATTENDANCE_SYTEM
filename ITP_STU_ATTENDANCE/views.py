@@ -1,8 +1,9 @@
 from django.shortcuts import render , redirect
 from django.contrib.auth.forms import AuthenticationForm
 from attendance.forms import UserRegisterForm, StudentRegisterForm, TeacherRegisterForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login ,logout
 from django.contrib.auth.decorators import login_required
+from attendance.models import User,Student,Teacher
 
 def Base(request):
     return render(request, 'base.html')
@@ -17,7 +18,14 @@ def user_login(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('dashboard')
+                if user.user_type == 'STUDENT':
+                    return redirect('student_home')
+                elif user.user_type == 'TEACHER':   
+                    return redirect('teacher_home')
+                elif user.user_type == 'ADMIN':
+                    return redirect('admin_home')
+                else:
+                    return redirect('login')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -29,28 +37,29 @@ def register(request):
 
     if request.method == 'POST':
         user_form = UserRegisterForm(request.POST)
-        student_form = StudentRegisterForm(request.POST, request.FILES)
-        teacher_form = TeacherRegisterForm(request.POST)
 
         if user_form.is_valid():
             user = user_form.save(commit=False)
-            user.set_password(user_form.cleaned_data['password1'])  # i don't but without this student details are not saving
+            user.set_password(user_form.cleaned_data['password1'])  
+            user.user_type = user_form.cleaned_data.get('user_type')
             user.save()
+            
+            # print(f"User {user.username} created with user_type: {user.user_type}")
 
-            if user.user_type == 'student' and student_form.is_valid():
+            if user.user_type == 'STUDENT':
                 student = student_form.save(commit=False)
                 student.user = user
                 student.save()
             
-            elif user.user_type == 'teacher' and teacher_form.is_valid():
+            elif user.user_type == 'TEACHER':
                 teachers = teacher_form.save(commit=False)
                 teachers.user = user
                 teachers.save()
 
             login(request, user)
             return redirect('login')
-    return render(request, 'register.html', {
-        'user_form': user_form,
-        'student_form': student_form,
-        'teacher_form': teacher_form
-    })
+    return render(request, 'register.html', {'user_form': user_form})
+    
+def user_logout(request):
+    logout(request)
+    return redirect('login')
