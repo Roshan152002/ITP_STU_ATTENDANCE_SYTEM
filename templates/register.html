@@ -13,22 +13,12 @@
           {% csrf_token %}
           <h2>User Details</h2>
           {{ user_form.as_p }}
-
-          <div id="student-form" style="display: none;">
-            <h2>Student Details</h2>
-            {{ student_form.as_p }}
-          </div>
-      
-          <div id="teacher-form" style="display: none;">
-            <h2>Teacher Details</h2>
-            {{ teacher_form.as_p }}
-          </div>
           <button type="submit">Register</button>
         </form>
       </div>
     </section>
 
-    <script>
+    {% comment %} <script>
       document.addEventListener("DOMContentLoaded", function() {
         var userTypeField = document.getElementById("id_user_type");
 
@@ -41,6 +31,6 @@
         userTypeField.addEventListener("change", toggleForms);
         toggleForms();  
     });
-    </script>
+    </script> {% endcomment %}
   </body>
 </html>

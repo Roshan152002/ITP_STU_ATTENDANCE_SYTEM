@@ -3,6 +3,7 @@ from .models import User, Student, Teacher
 from django.contrib.auth.forms import UserCreationForm
 
 class UserRegisterForm(UserCreationForm):
+    user_type = forms.ChoiceField(choices=User.USER_TYPE, required=True)
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'user_type']
