@@ -16,6 +16,7 @@ urlpatterns = [
     path('admins/dashboard/',adminViews.admin_home,name='admin_home'),
     path('student/dashboard/',studentViews.student_home,name='student_home'),
     path('teacher/dashboard/',teacherViews.teacher_home,name='teacher_home'),
+    path('profile/',views.profile,name='profile'),
     path('attendance/',include('attendance.urls')),
 ]
 

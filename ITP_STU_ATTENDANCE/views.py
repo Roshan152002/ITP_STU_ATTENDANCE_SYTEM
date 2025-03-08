@@ -4,6 +4,7 @@ from attendance.forms import UserRegisterForm, StudentRegisterForm, TeacherRegis
 from django.contrib.auth import authenticate, login ,logout
 from django.contrib.auth.decorators import login_required
 from attendance.models import User,Student,Teacher
+from django.contrib import messages
 
 def Base(request):
     return render(request, 'base.html')
@@ -63,3 +64,15 @@ def register(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+def profile(request):
+    data = User.objects.get(id=request.user.id)
+    if request.method == "POST":
+        data.first_name = request.POST.get('FirstName')
+        data.last_name = request.POST.get('LastName')
+        data.email = request.POST.get('email')
+        data.profile_pic = request.FILES.get('ProfilePicture')
+        data.save()
+        messages.success(request, 'Profile Updated Successfully')
+        return redirect('profile')
+    return render(request, 'profile.html',{'data':data})
