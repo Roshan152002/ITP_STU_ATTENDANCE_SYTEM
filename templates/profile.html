@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+<section class="container-fluid bg-light" id='main-content'>
+    <section class="container">
+        <h1 class="m-2">Profile</h1>
+        <div class="content bg-white p-5 my-auto border border-2 rounded">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="FirstName" class="form-label">Enter First Name</label>
+                    <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="First Name" value="{{data.first_name}}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="LastName" class="form-label">Enter Last Name</label>
+                    <input type="text" class="form-control" id="LastName" name="LastName" placeholder="Last Name" value="{{data.last_name}}">
+                </div>
+
+                <div class="mb-3">
+                  <label for="Email" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="Email" name="Email" aria-describedby="emailHelp" placeholder="Enter email" value="{{data.email}}">
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="Password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="Password" name="Password">
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Choose Profile Picture</label>
+                    <input class="form-control" type="file" id="formFile" name="ProfilePicture">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+    </section>
+</section>
+
+{% endblock %}

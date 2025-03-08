@@ -10,6 +10,7 @@ class User(AbstractUser):
         ('TEACHER','teacher'),
     ]
     user_type = models.CharField(max_length=25,choices = USER_TYPE,default='STUDENT',null=False,blank=False)
+    profile_pic = models.ImageField(upload_to='profile_pics/',null=True,blank=True)
 
     groups = models.ManyToManyField(
         Group,

@@ -119,3 +119,4 @@ AUTH_USER_MODEL = 'attendance.User' # this tells django to use this model as use
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
