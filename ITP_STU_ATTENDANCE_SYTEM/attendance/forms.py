@@ -1,19 +1,28 @@
-from .models import User , Student , Teacher
-from django.forms import ModelForm
+from django import forms
+from .models import User, Student, Teacher
 from django.contrib.auth.forms import UserCreationForm
-
 
 class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username','email','password1','password2','user_type']
+        fields = ['username', 'email', 'password1', 'password2', 'user_type']
 
-class StudendentRegisterForm(ModelForm):
+class StudentRegisterForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['roll_no','batch_name','phone_no','email','address','profile_pic']
+        fields = ['roll_no', 'batch_name', 'phone_no', 'address', 'profile_pic']
 
-class TeacherRegisterForm(ModelForm):
+class TeacherRegisterForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = ['phone_no','email','address','department']
+        fields = ['phone_no', 'address', 'department']
+
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['phone_no', 'address', 'profile_pic']
+
+class TeacherProfileForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = ['phone_no', 'address']

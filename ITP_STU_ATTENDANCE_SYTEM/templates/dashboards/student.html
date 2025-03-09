@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{ user_type }} Dashboard</h1>
+    
+    <nav>
+        <ul>
+            <li><a href="{% url 'view_profile' %}">View Profile</a></li>
+            <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+        <br><br>
+        <a href="{% url 'user_logout' %}"> LOGOUT </a>
+        <br><br>
+        </ul>
+    </nav>
+</body>
+</html>

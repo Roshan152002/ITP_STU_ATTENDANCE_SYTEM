@@ -74,18 +74,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -105,11 +105,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 
-MEDIA_URL = 'media/' # this tells "kaha se access karna chaiye"
+MEDIA_URL = '/media/' # this tells "kaha se access karna chaiye"
 MEDIA_ROOT = BASE_DIR / 'media' # this tells "kaha pe store hona chaiye"
 
-STATIC_URL = 'static/' # this tells "kaha se access karna chaiye"
+STATIC_URL = '/static/' # this tells "kaha se access karna chaiye"
 STATIC_ROOT = BASE_DIR / 'static' # this tells django to "check for static files in this directory"
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'staticfiles',
+# ]
 
 AUTH_USER_MODEL = 'attendance.User' # this tells django to use this model as user model to 
 
@@ -117,12 +120,9 @@ AUTH_USER_MODEL = 'attendance.User' # this tells django to use this model as use
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# 1. Custom User Model Conflicts
-# You're overriding Django’s default User model, but you didn't set AUTH_USER_MODEL in settings.py.
-# Fix: Add this in settings.py:
-# python
-# Copy
-# Edit
-# AUTH_USER_MODEL = 'your_app_name.User'
-# Also, renaming User to CustomUser can avoid confusion.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mayurgholap.core12@gmail.com'  
+EMAIL_HOST_PASSWORD = 'wzvl qzvx anho szjj'    # Use an app password if using Gmail
