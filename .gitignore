@@ -1,0 +1,9 @@
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+
+# Ignore database file
+db.sqlite3
+
+# Ignore media/uploads
+media/
