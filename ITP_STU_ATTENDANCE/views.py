@@ -67,10 +67,11 @@ def user_logout(request):
 
 def profile(request):
     data = User.objects.get(id=request.user.id)
+    print(data.user_type)
     if request.method == "POST":
         data.first_name = request.POST.get('FirstName')
         data.last_name = request.POST.get('LastName')
-        data.email = request.POST.get('email')
+        data.email = request.POST.get('Email')
         data.profile_pic = request.FILES.get('ProfilePicture')
         data.save()
         messages.success(request, 'Profile Updated Successfully')
