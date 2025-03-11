@@ -27,9 +27,22 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return f'{self.username} ({self.user_type})'    
+        return f'{self.username} ({self.user_type})'
+    
+# class Admin(models.Model):
+#     user = models.OneToOneField(User,)   
+ 
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)    
+    
+    def __str__(self):
+        return self.name
+
 class Student(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='student_model')
+    gender = models.CharField(max_length=10,default='male',null=True,blank=True)
     roll_no = models.CharField(max_length=10)
     batch_name = models.CharField(max_length=100,null=False,blank=False)
     phone_no = models.CharField(max_length=10,unique=True,null=True,blank=True)
@@ -56,7 +69,7 @@ class Teacher(models.Model):
 
     def __str__(self):
         return f'{self.user.username} (Teacher) from - {self.department} department'
-    
+
 
 # class Subject(models.Model):
 #     subject_name = models.CharField(max_length=100,unique=True)
