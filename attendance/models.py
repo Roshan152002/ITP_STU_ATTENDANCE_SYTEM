@@ -11,6 +11,8 @@ class User(AbstractUser):
     ]
     user_type = models.CharField(max_length=25,choices = USER_TYPE,default='STUDENT',null=False,blank=False)
     profile_pic = models.ImageField(upload_to='profile_pics/',null=True,blank=True)
+    email_verified = models.BooleanField(default=False)
+    otp = models.CharField(max_length=6, blank=True, null=True)
 
     groups = models.ManyToManyField(
         Group,
@@ -28,7 +30,7 @@ class User(AbstractUser):
         return f'{self.username} ({self.user_type})'    
 class Student(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='student_model')
-    roll_no = models.CharField(max_length=10,unique=True)
+    roll_no = models.CharField(max_length=10)
     batch_name = models.CharField(max_length=100,null=False,blank=False)
     phone_no = models.CharField(max_length=10,unique=True,null=True,blank=True)
     email = models.EmailField()

@@ -17,3 +17,14 @@ class TeacherRegisterForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = ['phone_no', 'address', 'department']
+
+
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['phone_no', 'address', 'profile_pic']
+
+class TeacherProfileForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = ['phone_no', 'address']
