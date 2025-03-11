@@ -42,6 +42,7 @@ class Course(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='student_model')
+    course_id = models.ForeignKey(Course,on_delete=models.DO_NOTHING,null=True,blank=True,default=None)
     gender = models.CharField(max_length=10,default='male',null=True,blank=True)
     roll_no = models.CharField(max_length=10)
     batch_name = models.CharField(max_length=100,null=False,blank=False)
