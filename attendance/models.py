@@ -25,8 +25,7 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return f'{self.username} ({self.user_type})'
-    
+        return f'{self.username} ({self.user_type})'    
 class Student(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='student_model')
     roll_no = models.CharField(max_length=10,unique=True)
