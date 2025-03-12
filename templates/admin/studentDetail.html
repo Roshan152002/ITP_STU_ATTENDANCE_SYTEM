@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Student Detail{% endblock title %}
+
+{% block content %}
+<section class="container-fluid bg-light" id="main-content">
+    <div class="container">
+        <h1>Student Details</h1>
+        <div class="content bg-white p-5 my-3 border border-2 rounded">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    {% if student.profile_pic %}
+                        <img src="{{ student.profile_pic.url }}" alt="Profile Picture" class="img-fluid" width="150 ">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-8">
+                    <p><strong>Student Name:</strong> {{ student.user.first_name }} {{ student.user.last_name }}</p>
+                    <p><strong>Username:</strong> {{ student.user.username }}</p>
+                    <p><strong>Email:</strong> {{ student.user.email }}</p>
+                    <p><strong>Roll Number:</strong> {{ student.roll_no }}</p>
+                    <p><strong>Gender:</strong> {{ student.gender|title }}</p>
+                    <p><strong>Course:</strong> {{ student.course_id }}</p>
+                    <p><strong>Batch:</strong> {{ student.batch_name }}</p>
+                    <p><strong>Phone Number:</strong> {{ student.phone_no }}</p>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'student_list' %}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

@@ -43,8 +43,8 @@ def user_login(request):
 
 def register(request):
     user_form = UserRegisterForm()
-    student_form = StudentRegisterForm()
-    teacher_form = TeacherRegisterForm()
+    # student_form = StudentRegisterForm()
+    # teacher_form = TeacherRegisterForm()
 
     if request.method == 'POST':
         user_form = UserRegisterForm(request.POST)

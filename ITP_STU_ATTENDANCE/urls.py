@@ -14,15 +14,23 @@ urlpatterns = [
     path('base/',views.Base,name='BaseLayout'),
     path('register/',views.register,name='register'),
     path('logout/',views.user_logout,name='logout'),
-    path('admins/dashboard/',adminViews.admin_home,name='admin_home'),
-    path('student/dashboard/',studentViews.student_home,name='student_home'),
-    path('teacher/dashboard/',teacherViews.teacher_home,name='teacher_home'),
     path('profile/',views.profile,name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
-    path('attendance/',include('attendance.urls')),
     path('password_reset/', views.custom_password_reset, name='password_reset'),
     path('verify_otp/<int:user_id>/',views.verify_otp, name='verify_otp'),
     path('reset/<uidb64>/<token>/', views.custom_password_reset_confirm, name='password_reset_confirm'),
+    
+    path('admins/dashboard/',adminViews.admin_home,name='admin_home'),
+    path('admins/students/',adminViews.student_list,name='student_list'),
+    path('admins/student/add/',adminViews.student_add,name="student_add"),
+    path('admins/student/detail/<int:id>/',adminViews.student_detail,name="student_detail"),
+    path('admins/student/update/<int:id>/',adminViews.student_edit,name="student_edit"),
+    path('admins/student/delete/<int:id>/',adminViews.student_delete,name="student_delete"),
+    
+    path('student/dashboard/',studentViews.student_home,name='student_home'),
+    
+    path('teacher/dashboard/',teacherViews.teacher_home,name='teacher_home'),
+    path('attendance/',include('attendance.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
