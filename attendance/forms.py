@@ -11,7 +11,7 @@ class UserRegisterForm(UserCreationForm):
 class StudentRegisterForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['address', 'gender', 'phone_no', 'profile_pic']
+        fields = ['address', 'gender','course_id', 'phone_no', 'profile_pic']
 
 class TeacherRegisterForm(forms.ModelForm):
     class Meta:

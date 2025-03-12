@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}student add{% endblock title %}
+
+{% block content %}
+    <section class="container-fluid bg-light" id="main-content">
+        <section class="container">
+            <h1>Add Student</h1>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}" role="alert">
+                        {{ message }}
+                    </div>  
+                {% endfor %}
+            {% endif %}
+            <div class="content bg-white p-5 my-auto border border-2 rounded">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="username" class="form-label">Enter Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="FirstName" class="form-label">Enter First Name</label>
+                            <input type="text" class="form-control" id="FirstName" name="firstname" placeholder="First Name">
+                        </div>
+        
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="LastName" class="form-label">Enter Last Name</label>
+                            <input type="text" class="form-control" id="LastName" name="lastname" placeholder="Last Name">
+                        </div>
+        
+                        <div class="mb-3 col-12 col-md-6">
+                          <label for="Email" class="form-label">Email address</label>
+                          <input type="email" class="form-control" id="Email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="Password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="Password" name="password">
+                          </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="rollno" class="form-label">Roll Number</label>
+                            <input type="text" class="form-control" id="rollno" name="rollno" placeholder="Enter Your Roll NO">
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="course" class="form-label">Course</label>
+                            <select class="form-select" name="course">
+                                {% for course in courses %}
+                                    <option value="{{ course.id }}">{{ course.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select class="form-select" name="gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                              </select>
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="batch" class="form-label">Batch Name</label>
+                            <input type="text" class="form-control" id="batch" name="batch" placeholder="Enter Your Batch Name">
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="phonono" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phonono" name="phonono" maxlength="10" placeholder="Enter Phone Number">
+                        </div>
+
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="formFile" class="form-label">Choose Profile Picture</label>
+                            <input class="form-control" type="file" id="formFile" name="profile">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+        </section>
+    </section>
+{% endblock content %}
