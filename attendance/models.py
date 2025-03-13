@@ -52,6 +52,8 @@ class Student(models.Model):
     enrollment_date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     profile_pic = models.FileField(upload_to='profile_pics/',null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
 
     class Meta:
         ordering = ['roll_no']
@@ -61,27 +63,28 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='teacher_model')
+    gender = models.CharField(max_length=20,default='male')
     phone_no = models.CharField(max_length=10,unique=True,null=True,blank=True)
-    email = models.EmailField()
     address = models.TextField(null=True,blank=True)
     joining_date = models.DateField(auto_now_add=True)
     department = models.CharField(max_length=100,null=True,blank=True)
     is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
 
     def __str__(self):
         return f'{self.user.username} (Teacher) from - {self.department} department'
 
 
-# class Subject(models.Model):
-#     subject_name = models.CharField(max_length=100,unique=True)
-#     subject_code = models.CharField(max_length=10,unique=True)
-#     teacher = models.ForeignKey(Teacher,on_delete=models.SET_NULL,null=True,related_name='teacher_subject')
-
-#     class Meta :
-#         ordering = ['subject_name']
-
-#     def __str__(self):
-#         return f'{self.subject_name} - ({self.subject_code})'
+class Subject(models.Model):
+    name = models.CharField(max_length=100,unique=True)
+    course = models.ForeignKey(Course,on_delete=models.SET_NULL,null=True,blank=True)
+    teacher = models.ForeignKey(Teacher,on_delete=models.SET_NULL,null=True,blank=True,related_name='teacher_subject')
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
+   
+    def __str__(self):
+        return f'{self.name} - ({self.course})'
     
 
 # class Attendance(models.Model):
