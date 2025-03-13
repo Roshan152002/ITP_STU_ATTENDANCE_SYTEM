@@ -3,8 +3,71 @@
 {% block title %}Admin's Dashboard{% endblock title %}
 
 {% block content %}
-<div class="content">
-    <h1>Admin Dashboard</h1>
-    <p>Welcome {{user.first_name}} {{user.last_name}}</p>
-</div>
+<section class="container-fluid bg-light" id="main-content">
+    <section class="container">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome {{user.first_name}} {{user.last_name}}</p>
+        <div class="content bg-white p-5 my-3 border border-2 rounded">
+            <div class="row justify-content-evenly">
+
+                <div class="card mb-3 bg-primary" style="width: 250px; height:90px">
+                    <div class="row g-0">
+                      <div class="col-md-4 d-flex justify-content-center align-items-center">
+                        <i class="fas fa-user-graduate fa-2x text-white"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title fw-bold">{{stu_count}}</h5>
+                          <p class="card-text">Students</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-3 bg-warning" style="width: 250px; height:90px">
+                    <div class="row g-0">
+                      <div class="col-md-4 d-flex justify-content-center align-items-center">
+                        <i class="fas fa-chalkboard-teacher fa-2x text-white"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title fw-bold ">{{t_count}}</h5>
+                          <p class="card-text">Teachers</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-3 bg-success" style="width: 250px; height:90px">
+                    <div class="row g-0">
+                      <div class="col-md-4 d-flex justify-content-center align-items-center">
+                        <i class="fas fa-book-reader fa-2x text-white"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title fw-bold">{{c_count}}</h5>
+                          <p class="card-text">Courses</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-3 bg-info" style="width: 250px; height:90px">
+                    <div class="row g-0">
+                      <div class="col-md-4 d-flex justify-content-center align-items-center">
+                        <i class="fas fa-book-open fa-2x text-white"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title fw-bold">{{sub_count}}</h5>
+                          <p class="card-text">Subjects</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+            </div>
+        </div>
+    </section>
+</section>
 {% endblock %}

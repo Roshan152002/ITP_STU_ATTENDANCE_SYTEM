@@ -1,13 +1,18 @@
 from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from attendance.models import Student,User,Course
+from attendance.models import Student, Subject,User,Course,Teacher
 
 
 # Create your views here.
 @login_required(login_url='/')
 def admin_home(request):
-    return render(request,'admin/home.html')
+    student_count = Student.objects.all().count()
+    teacher_count = Teacher.objects.all().count()
+    course_count = Course.objects.all().count()
+    subject_count = Subject.objects.all().count()
+    
+    return render(request,'admin/home.html',{'stu_count':student_count,'t_count':teacher_count,'c_count':course_count,'sub_count':subject_count})
 
 
 def student_list(request):
@@ -84,8 +89,6 @@ def student_edit(request, id):
         user.first_name = firstname
         user.last_name = lastname
         user.email = email
-        # if password:
-        #     user.set_password(password)
         user.save()
 
         course = Course.objects.get(id=course_id) if course_id else None
@@ -114,3 +117,8 @@ def student_delete(request,id):
     student = get_object_or_404(Student, user_id=id)
     student.delete()
     return redirect('student_list')
+
+
+def course_list(request):
+    courses = Course.objects.all()
+    return render(request,'admin/courseList.html',{'courses':courses})
