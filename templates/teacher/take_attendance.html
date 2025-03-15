@@ -97,10 +97,10 @@
                                             <tr>
                                                 <td>{{ student.roll_no }}</td>
                                                 <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
-                                                <td><input class="form-check-input me-1" type="checkbox" value="present" name="presenty" id="firstCheckbox">
-                                                    <label class="form-check-label" for="firstCheckbox">Present</label></td>
-                                                <td><input class="form-check-input me-1" type="checkbox" value="absent" name="presenty" id="second">
-                                                    <label class="form-check-label" for="second">Absent</label></td>
+                                                <td><select class="form-select" name="presenty_{{student.user.id}}">
+                                                    <option value="present">Present</option>
+                                                    <option value="absent">Absent</option>
+                                                    </select></td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>

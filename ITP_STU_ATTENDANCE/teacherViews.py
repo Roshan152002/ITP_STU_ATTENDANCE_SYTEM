@@ -1,3 +1,4 @@
+from email import message
 from django.shortcuts import get_object_or_404, render
 from attendance.models import Batch, Course, Student,Subject,Teacher,Attendance
 from django.contrib.auth.decorators import login_required
@@ -36,10 +37,15 @@ def take_attendance(request):
             selected_subject = request.POST.get('subject')
             selected_batch = request.POST.get('batch')
             selected_date = request.POST.get('date')
+            
+            subject = get_object_or_404(Subject, id=selected_subject)
+            batch = get_object_or_404(Batch, id=selected_batch)
 
 
             students = Student.objects.filter(course_id=selected_course , batch=selected_batch)
             for student in students:
-                presenty = request.POST.get('presenty')
-                print(presenty,student.user.first_name)
+                presenty = request.POST.get(f'presenty_{student.user.id}', 'Absent')  
+                # print(presenty, student.user.first_name)
+                attendace = Attendance.objects.create(student=student, subject=subject,batch=batch,teacher=teacher, date=selected_date, is_present=presenty)
+                attendace.save()
     return render(request,"teacher/take_attendance.html",{'courses':courses,'subjects':subjects ,'batchs':batchs})
