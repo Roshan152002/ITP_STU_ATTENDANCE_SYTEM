@@ -43,9 +43,6 @@ def user_login(request):
 
 def register(request):
     user_form = UserRegisterForm()
-    # student_form = StudentRegisterForm()
-    # teacher_form = TeacherRegisterForm()
-
     if request.method == 'POST':
         user_form = UserRegisterForm(request.POST)
 
@@ -73,16 +70,12 @@ def register(request):
             # print(f"User {user.username} created with user_type: {user.user_type}")
 
             if user.user_type == 'STUDENT':
-                student = student_form.save(commit=False)
-                student.user = user
-                student.email = user.email
+                student = Student.objects.create(user=user, email=user.email)
                 student.save()
             
             elif user.user_type == 'TEACHER':
-                teachers = teacher_form.save(commit=False)
-                teachers.user = user
-                teachers.email = user.email
-                teachers.save()
+                teacher = Teacher.objects.create(user=user)
+                teacher.save()
             
             return redirect('verify_otp', user_id=user.id)
 

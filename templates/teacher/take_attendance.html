@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Student Attendance{% endblock title %}
+
+{% block content %}
+<section class="container-fluid bg-light" id='main-content'>
+    <section class="container">
+        <h1 class="m-2">Profile</h1>
+        <div class="content bg-white p-5 my-auto border border-2 rounded">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    {% if selected_course %}
+
+                    <div class="mb-3 col-12 col-md-3">
+                        <label for="batch" class="form-label">Batch</label>
+                        <select class="form-select" name="batch">
+                            {% for batch in batchs %}
+                                <option value="{{ batch.id }}" {% if batch.id|stringformat:"s" == selected_batch %}selected{% endif %} required>{{ batch.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                        <div class="mb-3 col-12 col-md-2">
+                            <label for="course" class="form-label">Course</label>
+                            <select class="form-select" name="course">
+                                {% for course in courses %}
+                                <option value="{{ course.id }}" {% if course.id|stringformat:"s" == selected_course %}selected{% endif %} required>{{ course.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-2">
+                            <label for="subject" class="form-label">Subject</label>
+                            <select class="form-select" name="subject">
+                                {% for subject in subjects %}
+                                    <option value="{{subject.id }}" {% if subject.id|stringformat:'s' == selected_subject %}selected{% endif %} required>{{ subject.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-2">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" name="date" id="date" value={{selected_date}} required >
+                        </div>
+                    {% else %}
+                            <div class="mb-3 col-12 col-md-3">
+                                <label for="batch" class="form-label">Batch</label>
+                                <select class="form-select" name="batch">
+                                    {% for batch in batchs %}
+                                        <option value="{{ batch.id }}" required>{{ batch.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="mb-3 col-12 col-md-2">
+                                <label for="course" class="form-label">Course</label>
+                                <select class="form-select" name="course">
+                                    {% for course in courses %}
+                                        <option value="{{ course.id }}" required>{{ course.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+            
+                            <div class="mb-3 col-12 col-md-2">
+                                <label for="subject" class="form-label">Subject</label>
+                                <select class="form-select" name="subject">
+                                    {% for subject in subjects %}
+                                        <option value="{{subject.id }}" required>{{ subject.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="mb-3 col-12 col-md-2">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" name="date" id="date" required >
+                            </div>
+
+                            <div class="mb-3 col-md-3 p-2">
+                                <button class="btn btn-warning mt-4" id="take_attendance" name="fetch_data" type="submit">Fetch Data</button>
+                            </div>
+                    {% endif %}
+                </div>
+                {% if students %}
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-hover">
+                                    <thead style="--bs-table-bg: #0e2238;">
+                                        <tr>
+                                            <th scope="col" class="text-white">Roll No</th>
+                                            <th scope="col" class="text-white">Name</th>
+                                            <th scope="col" class="text-white">Attendance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for student in students %}
+                                            <tr>
+                                                <td>{{ student.roll_no }}</td>
+                                                <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
+                                                <td><input class="form-check-input me-1" type="checkbox" value="present" name="presenty" id="firstCheckbox">
+                                                    <label class="form-check-label" for="firstCheckbox">Present</label></td>
+                                                <td><input class="form-check-input me-1" type="checkbox" value="absent" name="presenty" id="second">
+                                                    <label class="form-check-label" for="second">Absent</label></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                {% endif %}
+                
+                <button type="submit" class="btn btn-primary" name="attendance_submit">Submit</button>
+              </form>
+        </div>
+    </section>
+</section>
+
+{% endblock content %}

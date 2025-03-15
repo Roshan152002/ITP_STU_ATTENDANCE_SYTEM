@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from attendance.models import Student, Subject,User,Course,Teacher
+from attendance.models import Student, Subject,User,Course,Teacher,Batch
 
 
 # Create your views here.
@@ -21,6 +21,7 @@ def student_list(request):
 
 def student_add(request):
     courses = Course.objects.all()
+    batches = Batch.objects.all()
     if request.method == 'POST':
         username = request.POST.get('username')
         firstname = request.POST.get('firstname')
@@ -30,7 +31,7 @@ def student_add(request):
         course_id = request.POST.get('course')  # Get course ID from the form
         gender = request.POST.get('gender')
         roll_no = request.POST.get('rollno')
-        batch = request.POST.get('batch')
+        batch_id = request.POST.get('batch')
         phonono = request.POST.get('phonono')
         profile = request.FILES.get('profile')
         
@@ -49,7 +50,7 @@ def student_add(request):
             messages.error(request,"User already exists")
 
         course = Course.objects.get(id=course_id) if course_id else None
-
+        batch = Batch.objects.get(id=batch_id) if batch_id else None
         
         student = Student(
             user=user,
@@ -57,28 +58,30 @@ def student_add(request):
             gender=gender,
             email = email,
             roll_no=roll_no,
-            batch_name=batch,
+            batch=batch,
             phone_no=phonono,
             profile_pic=profile
         )
         student.save()
 
-        return redirect('student_list')
+        return redirect('student_add')
 
-    return render(request, 'admin/addStudent.html',{'courses': courses})
+    return render(request, 'admin/addStudent.html',{'courses': courses ,'batches':batches})
         
 def student_edit(request, id):
     student = get_object_or_404(Student, user_id=id)
     user = student.user
 
     courses = Course.objects.all()
+    batches = Batch.objects.all()
     
     if request.method == 'POST':
         username = request.POST.get('username')
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
         email = request.POST.get('email')
-        course_id = request.POST.get('course')  
+        course_id = request.POST.get('course') 
+        batch_id = request.POST.get('batch') 
         gender = request.POST.get('gender')
         roll_no = request.POST.get('rollno')
         batch = request.POST.get('batch')
@@ -92,8 +95,10 @@ def student_edit(request, id):
         user.save()
 
         course = Course.objects.get(id=course_id) if course_id else None
+        batch = Batch.objects.get(id=batch_id) if batch_id else None
 
         student.course = course
+        student.batch = batch
         student.gender = gender
         student.roll_no = roll_no
         student.batch_name = batch
@@ -103,9 +108,9 @@ def student_edit(request, id):
         student.save()
 
         messages.success(request, 'Student Profile Updated Successfully!')
-        return redirect('student_list')
+        return redirect('student_edit')
 
-    return render(request, 'admin/editStudent.html', {'courses': courses, 'student': student})
+    return render(request, 'admin/editStudent.html', {'courses': courses, 'student': student ,'batches':batches})
 
         
 def student_detail(request, id):

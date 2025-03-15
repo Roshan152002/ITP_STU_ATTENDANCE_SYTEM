@@ -57,6 +57,14 @@
                             </select>
                         </div>
                         
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="batch" class="form-label">Batch</label>
+                            <select class="form-select" name="batch">
+                                {% for batch in batches %}
+                                    <option value="{{ batch.id }}">{{ batch.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                         
                         <div class="mb-3 col-12 col-md-6">
                             <label for="gender" class="form-label">Gender</label>
@@ -64,11 +72,6 @@
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                               </select>
-                        </div>
-
-                        <div class="mb-3 col-12 col-md-6">
-                            <label for="batch" class="form-label">Batch Name</label>
-                            <input type="text" class="form-control" id="batch" name="batch" placeholder="Enter Your Batch Name">
                         </div>
 
                         <div class="mb-3 col-12 col-md-6">

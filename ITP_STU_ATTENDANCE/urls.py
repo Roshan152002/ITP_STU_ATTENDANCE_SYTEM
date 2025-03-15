@@ -31,6 +31,7 @@ urlpatterns = [
     path('student/dashboard/',studentViews.student_home,name='student_home'),
     
     path('teacher/dashboard/',teacherViews.teacher_home,name='teacher_home'),
+    path('teacher/takeAttendance/',teacherViews.take_attendance,name='take_attendance'),
     path('attendance/',include('attendance.urls')),
 ]
 
