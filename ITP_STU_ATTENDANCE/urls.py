@@ -26,6 +26,13 @@ urlpatterns = [
     path('admins/student/detail/<int:id>/',adminViews.student_detail,name="student_detail"),
     path('admins/student/update/<int:id>/',adminViews.student_edit,name="student_edit"),
     path('admins/student/delete/<int:id>/',adminViews.student_delete,name="student_delete"),
+    
+    path('admins/teachers/',adminViews.teacher_list,name='teacher_list'),
+    path('admins/teacher/add/',adminViews.teacher_add,name="teacher_add"),
+    path('admins/teacher/update/<int:id>/',adminViews.teacher_edit,name="teacher_edit"),
+    path('admins/teacher/detail/<int:id>/',adminViews.teacher_detail,name="teacher_detail"),
+    path('admins/teacher/delete/<int:id>/',adminViews.teacher_delete,name="teacher_delete"),
+    
     path('admins/courses/',adminViews.course_list,name='course_list'),
     
     path('student/dashboard/',studentViews.student_home,name='student_home'),

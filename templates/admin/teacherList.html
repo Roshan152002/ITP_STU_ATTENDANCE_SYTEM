@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher List{% endblock title %}
+
+{% block content %}
+<section class="container-fluid bg-light" id='main-content'>
+    <section class="container">
+        <h1 class="m-2">Teacher List</h1>
+        <div class="content bg-white p-5 my-auto border border-2 rounded">
+            <div class="d-flex justify-content-end">
+                <a href="{% url "teacher_add" %}" class="btn btn-primary mb-3">Add</a>
+            </div>
+            <table class="table table-hover">
+                <thead class="table " style="--bs-table-bg: #0e2238;">
+                    <th scope="col" class="text-white">ID</th>
+                    <th scope="col" class="text-white">First Name</th>
+                    <th scope="col" class="text-white">Last Name</th>
+                    <th scope="col" class="text-white">Email</th>
+                    <th scope="col" class="text-white">Phone</th>
+                    <th scope="col" class="text-white">Details</th>
+                    <th scope="col" class="text-white">Update</th>
+                    <th scope="col" class="text-white">Delete</th>
+                </thead>
+                <tbody>
+                    {% for teacher in teachers %}
+                        <tr>
+                            <td>{{teacher.user.id}}</td>
+                            <td>{{teacher.user.first_name}}</td>
+                            <td>{{teacher.user.last_name}}</td>
+                            <td>{{teacher.user.email}}</td>
+                            <td>{{teacher.phone_no}}</td>
+                            <td><a href="{% url "teacher_detail" teacher.user.id %}" class="btn btn-info">view</a></td>
+                            <td><a href="{% url "teacher_edit" teacher.user.id %}" class="btn btn-success">edit</a></td>
+                            <td><a href="{% url "teacher_delete" teacher.user.id %}" class="btn btn-danger">delete</a></td>
+                        </tr> 
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </section>
+</section>
+{% endblock content %}
