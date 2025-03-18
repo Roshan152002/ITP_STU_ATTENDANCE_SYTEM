@@ -47,7 +47,16 @@
                             <label for="course" class="form-label">Course</label>
                             <select class="form-select" name="course">
                                 {% for course in courses %}
-                                    <option value="{{ course.id }}" {% if student.course.id == course.id %}selected{% endif %}>{{ course.name }}</option>
+                                    <option value="{{ course.id }}" {% if student.course_id.id == course.id %}selected{% endif %}>{{ course.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="batch" class="form-label">Batch</label>
+                            <select class="form-select" name="batch">
+                                {% for batch in batches %}
+                                    <option value="{{ batch.id }}" {% if student.batch.id == batch.id %}selected{% endif %}>{{ batch.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -60,10 +69,6 @@
                             </select>
                         </div>
 
-                        <div class="mb-3 col-12 col-md-6">
-                            <label for="batch" class="form-label">Batch Name</label>
-                            <input type="text" class="form-control" id="batch" name="batch" value="{{ student.batch_name }}" placeholder="Enter Your Batch Name">
-                        </div>
 
                         <div class="mb-3 col-12 col-md-6">
                             <label for="phonono" class="form-label">Phone Number</label>

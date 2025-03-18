@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="{% url "teacher_list" %}" class="sidebar-link">
                             <i class="fas fa-chalkboard-teacher"></i>
                             <span>Teachers</span>
                         </a>
@@ -90,7 +90,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="{% url "take_attendance" %}" class="sidebar-link">
                             <i class="fas fa-user-check"></i>
                             <span>Take Attendance</span>
                         </a>
@@ -102,7 +102,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="{% url "add_student_result" %}" class="sidebar-link">
                             <i class="fas fa-stream"></i>
                             <span>Exam Result</span>
                         </a>
@@ -118,7 +118,26 @@
                     <a href="{% url "student_home" %}">DashBoard</a>
                 </div>
             </div>
-            
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="{% url "profile" %}" class="sidebar-link">
+                        <i class="far fa-user-circle fs-4"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="fas fa-table"></i>
+                        <span>View Attendance</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url "view_result" %}" class="sidebar-link">
+                        <i class="fas fa-stream"></i>
+                        <span>Exam Result</span>
+                    </a>
+                </li>
+            </ul>
             {% endif %}
             
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser, Group,Permission
+from django.utils import timezone
 
 # Create your models here.
 
@@ -32,35 +33,6 @@ class User(AbstractUser):
 # class Admin(models.Model):
 #     user = models.OneToOneField(User,)   
  
-class Course(models.Model):
-    name = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)    
-    
-    def __str__(self):
-        return self.name
-
-class Student(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='student_model',default='STUDENT')
-    course_id = models.ForeignKey(Course,on_delete=models.DO_NOTHING,null=True,blank=True,default=None)
-    gender = models.CharField(max_length=10,default='male',null=True,blank=True)
-    roll_no = models.CharField(max_length=10)
-    batch_name = models.CharField(max_length=100,null=False,blank=False)
-    phone_no = models.CharField(max_length=10,unique=True,null=True,blank=True)
-    email = models.EmailField()
-    address = models.TextField(null=True,blank=True)
-    enrollment_date = models.DateField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
-    profile_pic = models.FileField(upload_to='profile_pics/',null=True,blank=True)
-    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
-    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
-
-    class Meta:
-        ordering = ['roll_no']
-
-    def __str__(self):
-        return f'{self.user.username} - {self.roll_no}'
-
 class Teacher(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='teacher_model')
     gender = models.CharField(max_length=20,default='male')
@@ -74,10 +46,16 @@ class Teacher(models.Model):
 
     def __str__(self):
         return f'{self.user.username} (Teacher) from - {self.department} department'
-
-
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)    
+    
+    def __str__(self):
+        return self.name
+    
 class Subject(models.Model):
-    name = models.CharField(max_length=100,unique=True)
+    name = models.CharField(max_length=100)
     course = models.ForeignKey(Course,on_delete=models.SET_NULL,null=True,blank=True)
     teacher = models.ForeignKey(Teacher,on_delete=models.SET_NULL,null=True,blank=True,related_name='teacher_subject')
     created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
@@ -86,24 +64,82 @@ class Subject(models.Model):
     def __str__(self):
         return f'{self.name} - ({self.course})'
     
-
-# class Attendance(models.Model):
-#     presenty = [
-#         ('present','present'),
-#         ('absent','absent'),
-#     ]
-
-#     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='student_attendance')
-#     subject = models.ForeignKey(Subject,on_delete=models.CASCADE,related_name='subject_attendance')
-#     date = models.DateField(auto_now_add=True)
-#     is_present = models.CharField(max_length=10,choices=presenty,default='absent')
-
-#     class Meta:
-#         ordering = ['-date']
-
-#     def __str__(self):
-#         return f'{self.student.user.username} - {self.subject.subject_name} -{self.is_present} on {self.date}'
     
+class Batch(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="batches")
+    
+    def __str__(self):
+        return f"{self.name} ({self.course.name})"
+
+class Student(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="student_model")
+    course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING, null=True, blank=True)
+    batch = models.ForeignKey(Batch, on_delete=models.DO_NOTHING, null=True, blank=True,related_name="students") 
+    roll_no = models.CharField(max_length=10)
+    phone_no = models.CharField(max_length=10, unique=True, null=True, blank=True)
+    email = models.EmailField()
+    gender = models.CharField(max_length=10,default='male',null=True,blank=True)
+    address = models.TextField(null=True,blank=True)
+    profile_pic = models.FileField(upload_to='profile_pics/',null=True,blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
+
+
+    def __str__(self):
+        return f"{self.user.username} - {self.roll_no} - ({self.batch.name})"
+
+class Attendance(models.Model):
+    PRESENTY_CHOICES = [
+        ('Present', 'Present'),
+        ('Absent', 'Absent'),
+    ]
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='attendances')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='attendances')
+    batch = models.ForeignKey(Batch, on_delete=models.CASCADE,null=True, blank=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE,null=True, blank=True)
+    date = models.DateField(default=timezone.now)  # Default to today
+    is_present = models.CharField(max_length=10, choices=PRESENTY_CHOICES, default='Absent')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-date']
+        unique_together = ('student', 'subject', 'date')  # Prevent duplicate attendance for the same student
+
+    def __str__(self):
+        return f'{self.student.user.get_full_name()} - {self.subject.name} - {self.is_present} on {self.date}'
+
+class AttendanceReport(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name='attendance_reports')
+    attendance = models.ForeignKey(Attendance, on_delete=models.CASCADE, related_name='reports')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.attendance.student.user.get_full_name()} - {self.attendance.subject.name} - {self.attendance.is_present} on {self.attendance.date}'
+    
+    
+class SubjectResult(models.Model):
+    student_id = models.ForeignKey(Student,on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subject,on_delete=models.CASCADE)
+    obtained_marks = models.IntegerField()
+    total_marks = models.IntegerField()
+    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('student_id', 'subject_id')
+        
+    def __str__(self):
+        return f'{self.student_id.user.get_full_name()} - {self.subject_id.name} - {self.obtained_marks}/{self.total_marks}'
 
 # class Exam(models.Model):
 #     title = models.CharField(max_length=255,unique=True)
