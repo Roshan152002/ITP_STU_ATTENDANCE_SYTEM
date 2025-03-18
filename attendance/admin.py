@@ -9,6 +9,7 @@ admin.site.register(Course)
 admin.site.register(Subject)
 admin.site.register(Batch)
 admin.site.register(Attendance)
+admin.site.register(SubjectResult)
 # admin.site.register(Exam)
 # admin.site.register(ExamSubmission)
 

@@ -5,7 +5,7 @@
 {% block content %}
 <section class="container-fluid bg-light" id='main-content'>
     <section class="container">
-        <h1 class="m-2">Profile</h1>
+        <h1 class="m-2">Student Attendance</h1>
         <div class="content bg-white p-5 my-auto border border-2 rounded">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -42,6 +42,10 @@
                         <div class="mb-3 col-12 col-md-2">
                             <label for="date" class="form-label">Date</label>
                             <input type="date" class="form-control" name="date" id="date" value={{selected_date}} required >
+                        </div>
+
+                        <div class="mb-3 col-md-3 p-2">
+                            <button class="btn btn-warning mt-4" id="take_attendance" name="fetch_data" type="submit">Fetch Data</button>
                         </div>
                     {% else %}
                             <div class="mb-3 col-12 col-md-3">

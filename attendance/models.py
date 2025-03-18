@@ -124,6 +124,22 @@ class AttendanceReport(models.Model):
 
     def __str__(self):
         return f'{self.attendance.student.user.get_full_name()} - {self.attendance.subject.name} - {self.attendance.is_present} on {self.attendance.date}'
+    
+    
+class SubjectResult(models.Model):
+    student_id = models.ForeignKey(Student,on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subject,on_delete=models.CASCADE)
+    obtained_marks = models.IntegerField()
+    total_marks = models.IntegerField()
+    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('student_id', 'subject_id')
+        
+    def __str__(self):
+        return f'{self.student_id.user.get_full_name()} - {self.subject_id.name} - {self.obtained_marks}/{self.total_marks}'
 
 # class Exam(models.Model):
 #     title = models.CharField(max_length=255,unique=True)
