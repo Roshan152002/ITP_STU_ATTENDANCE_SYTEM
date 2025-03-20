@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Course List{% endblock title %}
+{% block title %}Subject List{% endblock title %}
 
 {% block content %}
 <section class="container-fluid bg-light" id='main-content'>
     <section class="container">
-        <h1 class="m-2">Courses List</h1>
+        <h1 class="m-2">Subject List</h1>
         <div class="content bg-white p-5 my-auto border border-2 rounded">
             <div class="d-flex justify-content-end">
-                <a href="{% url "course_add" %}" class="btn btn-primary mb-3">Add</a>
+                <a href="{% url "subject_add" %}" class="btn btn-primary mb-3">Add</a>
             </div>
             <table class="table table-hover">
                 <thead class="table " style="--bs-table-bg: #0e2238;">
                     <th scope="col" class="text-white">ID</th>
+                    <th scope="col" class="text-white">Subject Name</th>
                     <th scope="col" class="text-white">Course Name</th>
-                    <th scope="col" class="text-white">Created At</th>
-                    <th scope="col" class="text-white">Updated At</th>
+                    <th scope="col" class="text-white">Assigned Teacher</th>
                     <th scope="col" class="text-white">Update</th>
                     <th scope="col" class="text-white">Delete</th>
                 </thead>
                 <tbody>
-                    {% for course in courses %}
+                    {% for subject in subjects %}
                         <tr>
-                            <td>{{course.id}}</td>
-                            <td>{{course.name}}</td>
-                            <td>{{course.created_at}}</td>
-                            <td>{{course.updated_at}}</td>
-                            <td><a href="{% url "course_edit" course.id %}" class="btn btn-success">edit</a></td>
-                            <td><a href="{% url "course_delete" course.id %}" class="btn btn-danger">delete</a></td>
+                            <td>{{subject.id}}</td>
+                            <td>{{subject.name}}</td>
+                            <td>{{subject.course.name}}</td>
+                            <td>{{subject.teacher.user.get_full_name}}</td>
+                            <td><a href="{% url "subject_edit" subject.id %}" class="btn btn-success">edit</a></td>
+                            <td><a href="{% url "subject_delete" subject.id %}" class="btn btn-danger">delete</a></td>
                         </tr> 
                     {% endfor %}
                 </tbody>

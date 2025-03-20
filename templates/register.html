@@ -10,30 +10,27 @@
   <body>
     <section class="container-fluid" id='main-content'>
       <section class="container">
-          <div class="d-flex justify-content-center align-items-center border border-3 border-primary my-5">
-            <form method="POST" enctype="multipart/form-data" class="p-5 border border-2 border-primary my-5 bg-light">
+          <div class="d-flex justify-content-center align-items-center">
+            <form method="POST" enctype="multipart/form-data" class="p-5 my-5 bg-light">
               {% csrf_token %}
-              {{ user_form.as_p }}
-              {% comment %} <h2>Register</h2>
+              {% comment %} {{ user_form.as_p }} {% endcomment %}
+              <h2>Register</h2>
               <div class="form-group w-100 d-flex flex-column gap-2 my-3 border border-3 border-primary p-3">
-                <label for="{{form.username.id_for_label}}">Username</label>
-                <input type="text" class="form-control" id="{{form.username.id_for_label}}" name="{{form.username.name}}" placeholder="Enter your username">
+                <label for="{{ user_form.username.id_for_label }}">Username</label>
+                {{ user_form.username }}
 
-                <label for="{{form.email.id_for_label}}">Email</label>
-                <input type="email" class="form-control" id="{{form.email.id_for_label}}" name="{{form.email.name}}" placeholder="Enter your email">
+                <label for="{{ user_form.email.id_for_label }}">Email</label>
+                {{ user_form.email }}
+                            
+                <label for="{{ user_form.password1.id_for_label }}">Password</label>
+                {{ user_form.password1 }}
+                            
+                <label for="{{ user_form.password2.id_for_label }}">Confirm Password</label>
+                {{ user_form.password2 }}
+                            
+                <label for="{{ user_form.user_type.id_for_label }}">User Type</label>
+                {{ user_form.user_type }}
 
-                <label for="{{form.password1.id_for_label}}" >Password</label>
-                <input type="password" class="form-control" id="{{form.password1.id_for_label}}" name="{{form.password1.name}}" placeholder="Enter your password">
-
-                <label for="{{form.password2.id_for_label}}">Confirm Password</label>
-                <input type="password" class="form-control" id="{{form.password2.id_for_label}}" name="{{form.password2.name}}" placeholder="Confirm your password">
-
-                <label for="{{form.user_type.id_for_label}}">User Type</label>
-                <select class="form-control" id="{{form.user_type.id_for_label}}" name="{{form.user_type.name}}">
-                  <option value="STUDENT">Student</option>
-                  <option value="TEACHER">Teacher</option>
-                  <option value="ADMIN">Admin</option>
-                </select> {% endcomment %}
                 <button type="submit" class="btn btn-primary my-2">Register</button>
               </div>
             </form>

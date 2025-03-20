@@ -104,6 +104,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
 
 MEDIA_URL = '/media/' # this tells "kaha se access karna chaiye"
 MEDIA_ROOT = BASE_DIR / 'media' # this tells "kaha pe store hona chaiye"

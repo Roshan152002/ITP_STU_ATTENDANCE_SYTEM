@@ -47,7 +47,7 @@ class Teacher(models.Model):
     def __str__(self):
         return f'{self.user.username} (Teacher) from - {self.department} department'
 class Course(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100,unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)    
     

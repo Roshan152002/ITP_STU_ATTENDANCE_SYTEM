@@ -85,19 +85,40 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
+@login_required
 def profile(request):
-    data = User.objects.get(id=request.user.id)
-    print(data.user_type)
+    data = User.objects.get(id=request.user.id)  # Get logged-in user
+
     if request.method == "POST":
+        # Update User model fields
         data.first_name = request.POST.get('FirstName')
         data.last_name = request.POST.get('LastName')
         data.email = request.POST.get('Email')
         data.profile_pic = request.FILES.get('ProfilePicture')
         data.save()
+
+        # Update Teacher fields if user is a TEACHER
+        if data.user_type == 'TEACHER':
+            teacher = Teacher.objects.get(user=data)
+            teacher.phone_no = request.POST.get('PhoneNo')
+            teacher.address = request.POST.get('Address')
+            teacher.gender = request.POST.get('Gender')
+            teacher.department = request.POST.get('Department')
+            teacher.save()
+
+        # Update Student fields if user is a STUDENT
+        elif data.user_type == 'STUDENT':
+            student = Student.objects.get(user=data)
+            student.roll_no = request.POST.get('RollNo')
+            student.phone_no = request.POST.get('PhoneNo')
+            student.address = request.POST.get('Address')
+            student.gender = request.POST.get('Gender')
+            student.profile_pic = request.FILES.get('ProfilePicture')
+            student.save()
+
         messages.success(request, 'Profile Updated Successfully')
         return redirect('profile')
-    return render(request, 'profile.html',{'data':data})
-
+    return render(request, 'profile.html', {'data': data})
 
 def custom_password_reset(request):
     if request.method == 'POST':

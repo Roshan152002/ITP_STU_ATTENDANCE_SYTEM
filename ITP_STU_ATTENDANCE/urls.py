@@ -34,13 +34,27 @@ urlpatterns = [
     path('admins/teacher/delete/<int:id>/',adminViews.teacher_delete,name="teacher_delete"),
     
     path('admins/courses/',adminViews.course_list,name='course_list'),
+    path('admins/courses/add/',adminViews.course_add,name="course_add"),
+    path('admins/courses/update/<int:id>/',adminViews.course_edit,name="course_edit"),    
+    path('admins/courses/delete/<int:id>/',adminViews.course_delete,name="course_delete"),
+    
+    path('admins/subjects/',adminViews.subject_list,name='subject_list'),
+    path('admins/subjects/add/',adminViews.subject_add,name="subject_add"),
+    path('admins/subjects/update/<int:id>/',adminViews.subject_edit,name="subject_edit"),
+    path('admins/subjects/delete/<int:id>/',adminViews.subject_delete,name="subject_delete"),
+    
+    path('admin-panel/view-attendance/', adminViews.admin_view_attendance, name='admin_view_attendance'),
+    path('admin-panel/exportAttendance/', adminViews.admin_export_attendance_excel, name="admin_export_attendance_excel"),
     
     
     path('teacher/dashboard/',teacherViews.teacher_home,name='teacher_home'),
     path('teacher/takeAttendance/',teacherViews.take_attendance,name='take_attendance'),
     path('teacher/student/result/',teacherViews.add_student_result,name='add_student_result'),
+    path('teacher/viewAttendance/',teacherViews.view_attendance,name='teacher_view_attendance'),
+    path('teacher/exportAttendance/', teacherViews.export_attendance_excel, name='export_attendance_excel'),
     
     path('student/dashboard/',studentViews.student_home,name='student_home'),
+    path('student/viewAttendance/',studentViews.view_attendance,name='view_attendance'),
     path('student/viewResult/',studentViews.view_result,name='view_result'),
     path('attendance/',include('attendance.urls')),
 ]

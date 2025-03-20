@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{%block title %}Student Results{% endblock title %}
+
+{% block content %}
+
+<section class="container-fluid bg-light" id='main-content'>
+    <section class="container">
+        <h1 class="m-2">Student Attendance</h1>
+        <div class="content bg-white p-5 my-auto border border-2 rounded">
+            <table class="table table-hover">
+                <thead class="table " style="--bs-table-bg: #0e2238;">
+                    <th scope="col" class="text-white">Roll NO</th>
+                    <th scope="col" class="text-white">Student Name</th>
+                    <th scope="col" class="text-white">Subject Name</th>
+                    <th scope="col" class="text-white">Date</th>
+                    <th scope="col" class="text-white">Status</th>
+                </thead>
+                <tbody>
+                    {% for attendance in attendances %}
+                        <tr>
+                            <td>{{ attendance.student.roll_no }}</td>
+                            <td>{{ attendance.student.user.get_full_name }}</td>
+                            <td>{{ attendance.subject.name }}</td>
+                            <td>{{ attendance.date }}</td>
+                            <td>{{ attendance.is_present }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </section>
+</section>
+
+{% endblock content %}
