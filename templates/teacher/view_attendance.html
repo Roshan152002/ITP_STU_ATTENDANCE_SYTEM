@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %} view attendance{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">View Attendance</h2>
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-3">
+                <label for="course">Course:</label>
+                <select name="course" id="course" class="form-control" required>
+                    <option value="">Select Course</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}" {% if course.id|stringformat:"s" == selected_course %}selected{% endif %}>{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="subject">Subject:</label>
+                <select name="subject" id="subject" class="form-control" required>
+                    <option value="">Select Subject</option>
+                    {% for subject in subjects %}
+                        <option value="{{ subject.id }}" {% if subject.id|stringformat:"s" == selected_subject %}selected{% endif %}>{{ subject.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="batch">Batch:</label>
+                <select name="batch" id="batch" class="form-control" required>
+                    <option value="">Select Batch</option>
+                    {% for batch in batches %}
+                        <option value="{{ batch.id }}" {% if batch.id|stringformat:"s" == selected_batch %}selected{% endif %}>{{ batch.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="date">Date:</label>
+                <input type="date" name="date" id="date" class="form-control" value="{{ selected_date }}" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Fetch Attendance</button>
+    </form>
+    
+    {% if attendance_records %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Attendance Status</th>
+                <th>Date</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in attendance_records %}
+            <tr>
+                <td>{{ record.student_name }}</td>
+                <td>{{ record.is_present }}</td>
+                <td>{{ record.date }}</td>
+                <td>{{ record.created_at }}</td>
+                <td>{{ record.updated_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-danger">No attendance records found for the selected criteria.</p>
+    {% endif %}
+
+    {% if attendance_records %}
+    <a href="{% url 'export_attendance_excel' %}?course={{ selected_course }}&subject={{ selected_subject }}&batch={{ selected_batch }}&date={{ selected_date }}" class="btn btn-success mb-3">
+        Download Excel
+    </a>
+{% endif %}
+</div>
+{% endblock %}

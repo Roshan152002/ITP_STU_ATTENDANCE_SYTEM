@@ -7,35 +7,100 @@
     <section class="container">
         <h1 class="m-2">Profile</h1>
         <div class="content bg-white p-5 my-auto border border-2 rounded">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}" role="alert">
+                        {{ message }}
+                    </div>  
+                {% endfor %}
+            {% endif %}
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+
+                <!-- Common User Fields -->
                 <div class="mb-3">
                     <label for="FirstName" class="form-label">Enter First Name</label>
-                    <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="First Name" value="{{data.first_name}}">
+                    <input type="text" class="form-control" id="FirstName" name="FirstName" value="{{ data.first_name }}">
                 </div>
 
                 <div class="mb-3">
                     <label for="LastName" class="form-label">Enter Last Name</label>
-                    <input type="text" class="form-control" id="LastName" name="LastName" placeholder="Last Name" value="{{data.last_name}}">
+                    <input type="text" class="form-control" id="LastName" name="LastName" value="{{ data.last_name }}">
                 </div>
 
                 <div class="mb-3">
-                  <label for="Email" class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="Email" name="Email" aria-describedby="emailHelp" placeholder="Enter email" value="{{data.email}}">
-                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <label for="Email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="Email" name="Email" value="{{ data.email }}">
                 </div>
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Choose Profile Picture</label>
+                    
+                    {% if data.profile_pic %}
+                        <div class="mb-2">
+                            <img src="{{ data.profile_pic.url }}" alt="Profile Picture" class="img-thumbnail" style="width: 150px; height: 150px;">
+                        </div>
+                    {% endif %}
+                
                     <input class="form-control" type="file" id="formFile" name="ProfilePicture">
                 </div>
-                
-        
+
+                <!-- Extra Fields for TEACHER -->
+                {% if data.user_type == "TEACHER" %}
+                <div class="mb-3">
+                    <label for="PhoneNo" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="PhoneNo" name="PhoneNo" maxlength="10" value="{{ data.teacher_model.phone_no }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Gender" class="form-label">Gender</label>
+                    <select class="form-control" id="Gender" name="Gender">
+                        <option value="male" {% if data.teacher_model.gender == 'male' %} selected {% endif %}>Male</option>
+                        <option value="female" {% if data.teacher_model.gender == 'female' %} selected {% endif %}>Female</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Department" class="form-label">Department</label>
+                    <input type="text" class="form-control" id="Department" name="Department" value="{{ data.teacher_model.department }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Address" class="form-label">Address</label>
+                    <textarea class="form-control" id="Address" name="Address">{{ data.teacher_model.address }}</textarea>
+                </div>
+                {% endif %}
+
+                <!-- Extra Fields for STUDENT -->
+                {% if data.user_type == "STUDENT" %}
+                <div class="mb-3">
+                    <label for="RollNo" class="form-label">Roll Number</label>
+                    <input type="text" class="form-control" id="RollNo" name="RollNo" value="{{ data.student_model.roll_no }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="PhoneNo" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="PhoneNo" name="PhoneNo" value="{{ data.student_model.phone_no }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Gender" class="form-label">Gender</label>
+                    <select class="form-control" id="Gender" name="Gender">
+                        <option value="male" {% if data.student_model.gender == 'male' %} selected {% endif %}>Male</option>
+                        <option value="female" {% if data.student_model.gender == 'female' %} selected {% endif %}>Female</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Address" class="form-label">Address</label>
+                    <textarea class="form-control" id="Address" name="Address">{{ data.student_model.address }}</textarea>
+                </div>
+                {% endif %}
+
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href='{% url "edit_profile" %}' class='btn btn-warning'>Edit</a>
-              </form>
+            </form>
+
         </div>
     </section>
 </section>
-
 {% endblock %}

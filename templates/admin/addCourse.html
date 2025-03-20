@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}course add{% endblock title %}
+
+{% block content %}
+    <section class="container-fluid bg-light" id="main-content">
+        <section class="container">
+            <h1>Add Course</h1>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}" role="alert">
+                        {{ message }}
+                    </div>  
+                {% endfor %}
+            {% endif %}
+            <div class="content bg-white p-5 my-auto border border-2 rounded">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="name" class="form-label">Course Name</label>
+                            <input type="text" class="form-control" id="name" name="course">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </section>
+    </section>
+{% endblock content %}

@@ -7,11 +7,11 @@
         <section class="container">
             <h1>Add Teacher</h1>
             {% if messages %}
-                {% comment %} {% for message in messages %} {% endcomment %}
+                {% for message in messages %}
                     <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}" role="alert">
                         {{ message }}
                     </div>  
-                {% comment %} {% endfor %} {% endcomment %}
+                {% endfor %}
             {% endif %}
             <div class="content bg-white p-5 my-auto border border-2 rounded">
                 <form method="POST" enctype="multipart/form-data">
