@@ -11,9 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!=2$y3&qw8j=om9cktzi%8dr3q%ult#p!nodg(7_j3)blr8-jb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -114,6 +114,7 @@ MEDIA_ROOT = BASE_DIR / 'media' # this tells "kaha pe store hona chaiye"
 STATIC_URL = '/static/' # this tells "kaha se access karna chaiye"
 STATIC_ROOT = '/static/' # this tells django to "check for static files in this directory"
 STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+STATIC_ROOT = 
 
 AUTH_USER_MODEL = 'attendance.User' # this tells django to use this model as user model to 
 
