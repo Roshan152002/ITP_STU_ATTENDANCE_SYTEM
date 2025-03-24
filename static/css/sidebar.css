@@ -74,7 +74,8 @@ body {
 }
 
 #sidebar:not(.expand) .sidebar-logo,
-#sidebar:not(.expand) a.sidebar-link span {
+#sidebar:not(.expand) a.sidebar-link span ,
+#sidebar:not(.expand) a.sidebar-link p {
     display: none;
 }
 
