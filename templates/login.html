@@ -14,6 +14,15 @@
                 <form method="POST" class="p-5  my-5 bg-light">
                     {% csrf_token %}
                     {% comment %} {{ form }} {% endcomment %}
+                    <div>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}" role="alert">
+                                     {{ message }}
+                                </div>  
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                     <h2>Login</h2>
                     <div class="form-group w-100 d-flex flex-column gap-2 my-3">
 

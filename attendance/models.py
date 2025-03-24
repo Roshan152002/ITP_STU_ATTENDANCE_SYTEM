@@ -141,30 +141,3 @@ class SubjectResult(models.Model):
     def __str__(self):
         return f'{self.student_id.user.get_full_name()} - {self.subject_id.name} - {self.obtained_marks}/{self.total_marks}'
 
-# class Exam(models.Model):
-#     title = models.CharField(max_length=255,unique=True)
-#     subject = models.ForeignKey(Subject,on_delete=models.CASCADE,related_name='subject_exam')
-#     teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name='exam_conducted')
-#     date = models.DateField()
-#     start_time = models.TimeField()
-#     end_time = models.TimeField()
-#     total_marks = models.IntegerField()
-
-#     def __str__(self):
-#         return f'{self.title} - {self.subject.subject_name} on {self.date} - {self.start_time} to {self.end_time}'
-
-
-# class ExamSubmission(models.Model):
-#     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='student_exam_submission')
-#     exam = models.ForeignKey(Exam,on_delete=models.CASCADE,related_name='exam_submission')
-#     marks_obtained = models.IntegerField()
-#     submitted_at = models.DateTimeField(auto_now_add=True)
-#     file = models.FileField(upload_to='exam_submissions/',null=True,blank=True)
-
-#     class Meta:
-#         unique_together = [('student','exam')]
-#         ordering = ["-submitted_at"]
-
-#     def __str__(self):
-#         return f'{self.student.user.username} - {self.exam.title} - {self.marks_obtained}'
-    
