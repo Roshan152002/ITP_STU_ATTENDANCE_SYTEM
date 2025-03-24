@@ -36,49 +36,62 @@ def user_login(request):
                 elif user.user_type == 'ADMIN':
                     return redirect('admin_home')
                 else:
+                    messages.error(request, "Invalid user type.")
                     return redirect('login')
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid form submission. Please check your inputs.")
+    
     else:
         form = AuthenticationForm()
+
     return render(request, 'login.html', {'form': form})
 
 def register(request):
     user_form = UserRegisterForm()
+    
     if request.method == 'POST':
         user_form = UserRegisterForm(request.POST)
 
         if user_form.is_valid():
-            user = user_form.save(commit=False)
-            user.set_password(user_form.cleaned_data['password1'])  
-            user.user_type = user_form.cleaned_data.get('user_type')
-            user.save()
-            
-            otp = str(random.randint(100000, 999999))
-            user.otp = otp
-            user.save()
-            
-            send_mail(
-                "Your OTP Code",
-                f"Your OTP is: {otp}",
-                'mayurgholap.core12@gmail.com',
-                [user.email],
-                fail_silently=False,
-            )
-            
-            print(f"Generated OTP for {user.email}: {otp}")
-            
-            
-            # print(f"User {user.username} created with user_type: {user.user_type}")
+            try:
+                user = user_form.save(commit=False)
+                user.set_password(user_form.cleaned_data['password1'])  
+                user.user_type = user_form.cleaned_data.get('user_type')
+                user.save()
+                
+                otp = str(random.randint(100000, 999999))
+                user.otp = otp
+                user.save()
+                
+                send_mail(
+                    "Your OTP Code",
+                    f"Your OTP is: {otp}",
+                    'mayurgholap.core12@gmail.com',
+                    [user.email],
+                    fail_silently=False,
+                )
+                
+                print(f"Generated OTP for {user.email}: {otp}")
+                
+                if user.user_type == 'STUDENT':
+                    student = Student.objects.create(user=user, email=user.email)
+                    student.save()
+                
+                elif user.user_type == 'TEACHER':
+                    teacher = Teacher.objects.create(user=user)
+                    teacher.save()
+                
+                messages.success(request, "Registration successful! Please verify your OTP.")
+                return redirect('verify_otp', user_id=user.id)
 
-            if user.user_type == 'STUDENT':
-                student = Student.objects.create(user=user, email=user.email)
-                student.save()
-            
-            elif user.user_type == 'TEACHER':
-                teacher = Teacher.objects.create(user=user)
-                teacher.save()
-            
-            return redirect('verify_otp', user_id=user.id)
-
+            except Exception as e:
+                messages.error(request, f"An error occurred: {e}")
+        
+        else:
+            messages.error(request, "Invalid form submission. Please check your inputs.")
+    
     return render(request, 'register.html', {'user_form': user_form})
     
 def user_logout(request):
