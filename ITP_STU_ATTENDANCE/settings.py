@@ -114,7 +114,6 @@ MEDIA_ROOT = BASE_DIR / 'media' # this tells "kaha pe store hona chaiye"
 STATIC_URL = '/static/' # this tells "kaha se access karna chaiye"
 STATIC_ROOT = '/static/' # this tells django to "check for static files in this directory"
 STATICFILES_DIRS = [ BASE_DIR / 'static' ]
-STATIC_ROOT = 
 
 AUTH_USER_MODEL = 'attendance.User' # this tells django to use this model as user model to 
 
@@ -129,5 +128,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'mayurgholap.core12@gmail.com'  
-EMAIL_HOST_PASSWORD = 'wzvl qzvx anho szjj' 
+EMAIL_HOST_USER = "DummyEmail7066@gmail.com"
+EMAIL_HOST_PASSWORD = "drsy nqng bksf lgaw"
