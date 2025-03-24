@@ -68,7 +68,7 @@ def register(request):
                 send_mail(
                     "Your OTP Code",
                     f"Your OTP is: {otp}",
-                    'mayurgholap.core12@gmail.com',
+                    'DummyEmail7066@gmail.com',
                     [user.email],
                     fail_silently=False,
                 )
@@ -149,7 +149,7 @@ def custom_password_reset(request):
                 send_mail(
                     "Reset Your Password",
                     f"Click the link to reset your password: {reset_url}",
-                    "admin@example.com",
+                    "DummyEmail7066@gmail.com",
                     [email],
                     fail_silently=False,
                 )
