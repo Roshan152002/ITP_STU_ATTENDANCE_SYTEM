@@ -112,7 +112,7 @@ MEDIA_URL = '/media/' # this tells "kaha se access karna chaiye"
 MEDIA_ROOT = BASE_DIR / 'media' # this tells "kaha pe store hona chaiye"
 
 STATIC_URL = '/static/' # this tells "kaha se access karna chaiye"
-STATIC_ROOT = '/static/' # this tells django to "check for static files in this directory"
+STATIC_ROOT = BASE_DIR / 'staticfiles' # this tells django to "check for static files in this directory"
 STATICFILES_DIRS = [ BASE_DIR / 'static' ]
 
 AUTH_USER_MODEL = 'attendance.User' # this tells django to use this model as user model to 
