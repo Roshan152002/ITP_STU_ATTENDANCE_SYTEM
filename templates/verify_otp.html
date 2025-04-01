@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify OTP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #f8f9fa;
         }
         .container {
             background: white;
@@ -19,26 +15,32 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
         }
-        input, button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Verify Your OTP</h2>
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
-        {% endif %}
-        <form method="POST">
-            {% csrf_token %}
-            <label for="otp">Enter OTP:</label>
-            <input type="text" id="otp" name="otp" required>
-            <button type="submit">Verify</button>
-        </form>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="col-md-4">
+            <div class="card p-4 shadow">
+                <div class="card-body text-center">
+                    <h2 class="mb-3">Verify Your OTP</h2>
+                    
+                    {% if error %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endif %}
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="otp" class="form-label">Enter OTP:</label>
+                            <input type="text" id="otp" name="otp" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Verify</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
