@@ -84,6 +84,24 @@
                     <input type="text" class="form-control" id="PhoneNo" name="PhoneNo" value="{{ data.student_model.phone_no }}">
                 </div>
 
+                <div class="mb-3 col-12 col-md-6">
+                    <label for="course" class="form-label">Course</label>
+                    <select class="form-select" name="course">
+                        {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3 col-12 col-md-6">
+                    <label for="batch" class="form-label">Batch</label>
+                    <select class="form-select" name="batch">
+                        {% for batch in batches %}
+                            <option value="{{ batch.id }}">{{ batch.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <div class="mb-3">
                     <label for="Gender" class="form-label">Gender</label>
                     <select class="form-control" id="Gender" name="Gender">

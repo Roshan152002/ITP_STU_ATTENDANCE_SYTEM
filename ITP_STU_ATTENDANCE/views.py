@@ -15,6 +15,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth import get_user_model
+from attendance.models import Course,Batch
 
 def Base(request):
     return render(request, 'base.html')
@@ -100,6 +101,8 @@ def user_logout(request):
 
 @login_required
 def profile(request):
+    courses = Course.objects.all()
+    batches = Batch.objects.all()
     data = User.objects.get(id=request.user.id)  # Get logged-in user
 
     if request.method == "POST":
@@ -124,6 +127,14 @@ def profile(request):
             student = Student.objects.get(user=data)
             student.roll_no = request.POST.get('RollNo')
             student.phone_no = request.POST.get('PhoneNo')
+            course_id = request.POST.get('course')
+            if course_id:
+                student.course_id = Course.objects.get(id=course_id)
+            
+            batch_id = request.POST.get('batch')
+            if batch_id:
+                student.batch_id = Batch.objects.get(id=batch_id)
+            
             student.address = request.POST.get('Address')
             student.gender = request.POST.get('Gender')
             student.profile_pic = request.FILES.get('ProfilePicture')
@@ -131,7 +142,7 @@ def profile(request):
 
         messages.success(request, 'Profile Updated Successfully')
         return redirect('profile')
-    return render(request, 'profile.html', {'data': data})
+    return render(request, 'profile.html', {'data': data,'courses': courses ,'batches':batches})
 
 def custom_password_reset(request):
     if request.method == 'POST':
