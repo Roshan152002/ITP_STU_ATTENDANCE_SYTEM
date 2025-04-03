@@ -27,7 +27,7 @@ def take_attendance(request):
             selected_date = request.POST.get('date')
 
 
-            students = Student.objects.filter(course_id=selected_course , batch=selected_batch)
+            students = Student.objects.filter(course_id=selected_course , batch=selected_batch ,)
             return render(request, "teacher/take_attendance.html",{'selected_course':selected_course,'courses':courses,'selected_subject':selected_subject,'subjects':subjects,'selected_date':selected_date,'students':students,'selected_batch':selected_batch,'batchs':batchs })
 
         elif 'attendance_submit' in request.POST:
